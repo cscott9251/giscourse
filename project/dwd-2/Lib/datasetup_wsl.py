@@ -24,7 +24,7 @@ import os
 #           "NDVI"]
 
 b = Path(__file__).parents[1].resolve()
-CSVFile = Path(f"{b}/data/modeldata.csv").resolve()
+CSVFile = Path(f"{b}/data/modeldatav2.csv").resolve()
 print(CSVFile)
 
 # fc = "D:\\Project\\DWD_Projekt2_Datensaetze\\LoD2GridSplit\\Ergebnis.gdb\\gebaeude_straktur_raster_grid"

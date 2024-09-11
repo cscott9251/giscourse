@@ -1,27 +1,42 @@
 #import arcpy
 from pyearth import Earth
 import pandas as pd
+import numpy as np  
+import statistics
+from scipy.stats import norm
 #import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 # import matplotlib
 # matplotlib.use('Agg')
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.preprocessing import  (
+    MinMaxScaler,
+    Normalizer,
+    RobustScaler,
+    StandardScaler,
+    minmax_scale
+)
+    
 from datasetup_wsl import CSVFile
 # from datasetup import fieldnames
 # from datasetup import ws
 
 #from sklearn import linear_model
-from sklearn.linear_model import LinearRegression
+#from sklearn.linear_model import LinearRegression
 #from sklearn.metrics import accuracy_score
 #from sklearn.metrics import mean_squared_error, mean_absolute_error
-from sklearn.model_selection import train_test_split, cross_val_score
+
 from sklearn.metrics import r2_score
 
 import h5py
 import joblib
+import sys
 
 df = pd.read_csv(CSVFile)
+
+print(df.shape)
+print(df.columns)
 
 df = df.dropna()
 
@@ -36,7 +51,30 @@ print(y.shape)
 print(y.columns)
 
 
+
+# print(X)
+# print(y)
+
+#plt.plot(X["NDVI"], y, marker=".", linestyle="none")
+# plt.figure(figsize=(24,200))
+# try:
+#     for i, col in enumerate(X.columns.to_list()):
+#         plt.subplot(10, 3, i + 1)
+#         plt.hist(X[col], label=col,color='blue')
+#         plt.legend()
+#         plt.title(col)
+#         plt.tight_layout()
+# except Exception as e:
+#     print(col,e)
+    
+# plt.savefig('foo.pdf')
+# plt.savefig('foo.png')
+#plt.show()
+# plt.xlabel("Body Temperature (F)")
+# plt.ylabel("Cumulative Distribution Function")
+
 #pd.set_option('display.width', 10000)
+
 pd.set_option('display.max_columns', None)
 # print(X.corr())
 
@@ -51,10 +89,12 @@ pd.set_option('display.max_columns', None)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
-joblib.dump(X_train, "X_train.sav")
-joblib.dump(X_test, "X_test.sav")
-joblib.dump(y_train, "y_train.sav")
-joblib.dump(y_test, "y_test.sav")
+# joblib.dump(X_train, "X_train.sav")
+# joblib.dump(X_test, "X_test.sav")
+# joblib.dump(y_train, "y_train.sav")
+# joblib.dump(y_test, "y_test.sav")
+
+print("------------------------------")
 
 print(X_train.shape)
 print(X_train.columns)
@@ -63,6 +103,14 @@ print(X_train.columns)
 print(y_train.shape)
 print(y_train.columns)
 
+print(X_train)
+print(y_train)
+
+# plt.plot(X,y)
+
+# plt.show()
+
+sys.exit()
 
 model_MARS = Earth(max_degree=2,max_terms=200,verbose=2 )
 
