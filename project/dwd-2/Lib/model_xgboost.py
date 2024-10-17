@@ -174,14 +174,13 @@ def gridsearch_sq_err(X,y):
 
 #joblib.dump(clf_sq,"clf_xgboost_sqv3.joblib")
 
-clf_sq = joblib.load("clf_xgboost_sqv2.joblib")
+clf_sq = joblib.load("clf_xgboost_sq.joblib")
 
-print(clf_sq.best_score_)
-
-y_pred = clf_sq.predict(X_test_reduced)
+clf_sqv2 = joblib.load("clf_xgboost_sqv2.joblib")
 
 
 
+y_pred = clf_sqv2.predict(X_test_reduced)
 
 
 tuned_pipe_sq = clf_sq.best_estimator_
@@ -202,11 +201,25 @@ tuned_pipe_sq = clf_sq.best_estimator_
 #y_pred = tuned_pipe_sq.predict(X_test_reduced)
 
 r2 = r2_score(y_test_reduced, y_pred)
+r2_adj = 1-(1-r2_score(y_test_reduced, y_pred))*((len(X_test_reduced)-1)/(len(X_test_reduced)-X_test_reduced.shape[1])-1)
 mse = mean_squared_error(y_test_reduced, y_pred)
 
 print(r2)
+print(r2_adj)
 print(mse)
     
+colab_crossval = joblib.load("Colab/crossval_scores.joblib")
+#randsearchXGB = joblib.load("Colab/random_searchXGB.joblib")
+#randsearchXGBv2 = joblib.load("Colab/random_searchXGBv2.joblib")
+
+print(clf_sq.best_score_)
+print(clf_sqv2.best_score_)
+print(colab_crossval)
+print(type(colab_crossval))
+#print(randsearchXGB.best_score_)
+#print(randsearchXGBv2.best_score_)
+
+
     
 # model_GBR = GradientBoostingRegressor(learning_rate=0.025)
 
